@@ -3,6 +3,40 @@ const { Post, User, Comment } = require('../../models');
 const sequelize = require('../..config/connection');
 const withAuth = require('../../utils/auth');
 
+router.get('/', async (req, res) => {
+  try {
+    const postData = await Post.findAll({
+      attributes: ['id', 'title', 'content', 'created_tm'],
+      order: [
+        [
+          'created_tm', 'DESC'
+        ]
+      ],
+      include: [
+        {
+          model: User,
+          attributes: ['username'],
+        },
+        {
+          model: Comment,
+          attributes: ['id', 'content', 'post_id', 'user_id', 'created_tm'],
+          include: {
+            model: User,
+            attribute: ['username']
+          },
+        },
+      ],
+    });
+
+    const posts = postData.map((post) => post.get({ plain: true }));
+
+    res.render('homepage', { posts, });
+  } catch (err) {
+    console.log(err);
+    res.status(500).json(err);
+  }
+});
+
 router.post('/', async (req, res) => {
   try {
     const newProject = await Project.create({
