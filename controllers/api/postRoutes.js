@@ -3,71 +3,113 @@ const { Post, User, Comment } = require('../../models');
 const sequelize = require('../..config/connection');
 const withAuth = require('../../utils/auth');
 
-router.get('/', async (req, res) => {
-  try {
-    const postData = await Post.findAll({
-      attributes: ['id', 'title', 'content', 'created_tm'],
-      order: [
-        [
-          'created_tm', 'DESC'
-        ]
-      ],
-      include: [
-        {
-          model: User,
-          attributes: ['username'],
-        },
-        {
-          model: Comment,
-          attributes: ['id', 'content', 'post_id', 'user_id', 'created_tm'],
-          include: {
-            model: User,
-            attribute: ['username']
-          },
-        },
-      ],
+router.get('/', (req, res) => {
+  Post.findAll({
+    attributes: ['id', 'title', 'content', 'created_tm'],
+    order: [['created_tm', 'DESC']],
+    include: [{
+      model: User,
+      attributes: ['username']
+    },
+    {
+      model: Comment,
+      attributes: ['id', 'comment_text', 'post_id', 'user_id', 'created_at'],
+      include: {
+        model: User,
+        attributes: ['username']
+      }
+    }]
+  })
+    .then(postData => res.json(postData.reverse()))
+    .catch(err => {
+      console.log(err);
+      res.status(500).json(err);
     });
-
-    const posts = postData.map((post) => post.get({ plain: true }));
-
-    res.render('homepage', { posts, });
-  } catch (err) {
-    console.log(err);
-    res.status(500).json(err);
-  }
 });
 
-router.post('/', async (req, res) => {
-  try {
-    const newProject = await Project.create({
-      ...req.body,
-      user_id: req.session.user_id,
+router.get('/:id', (req, res) => {
+  Post.findOne({
+    where: {
+      id: req.params.id
+    },
+    attributes: ['id', 'content', 'title', 'created_tm'],
+    include: [{
+      model: User,
+      attributes: ['username']
+    },
+    {
+      model: Comment,
+      atrtibutes: ['id', 'comment_text', 'post_id', 'user_id', 'created_tm'],
+      include: {
+        model: User,
+        attributes: ['username']
+      }
+    }]
+  })
+    .then(postData => {
+      if (!postData) {
+        res.status(400).json({ message: 'No post found ' });
+        return;
+      }
+      res.json(postData);
+    })
+    .catch(err => {
+      console.log(err);
+      res.status(500).json(err);
     });
-
-    res.status(200).json(newProject);
-  } catch (err) {
-    res.status(400).json(err);
-  }
 });
 
-router.delete('/:id', async (req, res) => {
-  try {
-    const projectData = await Project.destroy({
-      where: {
-        id: req.params.id,
-        user_id: req.session.user_id,
-      },
+router.post('/', withAuth, (req, res) => {
+  Post.create({
+    title: req.body.title,
+    content: req.body.content,
+    user_id: req.session.user_id
+  })
+    .then(postData => res.json(postData))
+    .catch(err => {
+      console.log(err);
+      res.status(500).json(err);
     });
+});
 
-    if (!projectData) {
-      res.status(404).json({ message: 'No project found with this id!' });
+router.put('/:id', withAuth, (req, res) => {
+  Post.update({
+    title: req.body.title,
+    content: req.body.content
+  }, {
+    where: {
+      id: req.params.id
+    }
+  }).then(postData => {
+    if (!postData) {
+      res.status(404).json({ message: 'No post found' });
       return;
     }
+    res.json(postData);
+  })
+    .catch(err => {
+      console.log(err);
+      res.status(500).json(err);
+    });
+});
 
-    res.status(200).json(projectData);
-  } catch (err) {
-    res.status(500).json(err);
-  }
+router.delete('/:id', withAuth, (req, res) => {
+  Post.destroy({
+    where: {
+      id: req.params.id
+    }
+  })
+    .then(postData => {
+      if (!postData) {
+        res.status(404).json({ message: 'No post found' });
+        return;
+      }
+      res.json(postData);
+    })
+    .catch(err => {
+      console.log(err);
+      res.status(500).json(err);
+    });
 });
 
 module.exports = router;
