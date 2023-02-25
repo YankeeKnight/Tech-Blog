@@ -10,7 +10,7 @@ Comment.init(
       primaryKey: true,
       autoIncrement: true,
     },
-    content: {
+    comment_text: {
       type: DataTypes.STRING,
       validate: {
         len: [3]
@@ -23,15 +23,6 @@ Comment.init(
         model: 'user',
         key: 'id'
       },
-    },
-    date_created: {
-      type: DataTypes.DATE,
-      allowNull: false,
-      defaultValue: DataTypes.NOW,
-    },
-    needed_funding: {
-      type: DataTypes.FLOAT,
-      allowNull: false,
     },
     post_id: {
       type: DataTypes.INTEGER,
