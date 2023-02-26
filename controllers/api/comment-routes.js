@@ -41,7 +41,7 @@ router.post('/', withAuth, (req, res) => {
 
 router.put('/:id', withAuth, (req, res) => {
     Comment.update({
-        content: req.body.content
+        comment_text: req.body.comment_text
     },
         {
             where: {

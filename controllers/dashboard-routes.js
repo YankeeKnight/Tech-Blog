@@ -4,14 +4,14 @@ const { User, Comment, Post } = require('../models');
 const withAuth = require('../utils/auth');
 
 router.get('/', withAuth, (req, res) => {
-    Post.beforeFindAfterExpandIncludeAll({
+    Post.findAll({
         where: {
             user_id: req.session.user_id
         },
-        attributes: ['id', 'title', 'content', 'created_tm'],
+        attributes: ['id', 'title', 'content', 'created_at'],
         include: [{
             model: Comment,
-            attributes: ['id', 'comment_text', 'post_id', 'user_id', 'created_tm'],
+            attributes: ['id', 'comment_text', 'post_id', 'user_id', 'created_at'],
             include: {
                 model: User,
                 attributes: ['username']
