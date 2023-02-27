@@ -1,28 +1,12 @@
-/* header,
-.project:not(:last-child) {
-  border-bottom: 1px solid #ccc;
+@import url('https://fonts.googleapis.com/css2?family=Share+Tech&family=Work+Sans:wght@400;600&display=swap');
+
+body {
+  font-family: 'Work Sans', sans-serif;
 }
 
-.no-button {
-  background: none;
-  border: none;
-  padding: 0;
-  cursor: pointer;
-  color: #1b89bc;
-  text-decoration: none;
-  font-size: 100%;
+h5 {
+  font-weight: 600;
 }
-
-.no-button:hover {
-  color: #065b83;
-  text-decoration: underline;
-}
-
-.dollar-amount {
-  color: #056605;
-  font-weight: bold;
-  margin-left: -5px;
-} */
 
 /* Set height of the grid so .sidenav can be 100% (adjust if needed) */
 .row.content {
@@ -35,9 +19,36 @@
   height: 100%;
 }
 
+.psLnk:hover {
+  text-decoration: none;
+  color: #241010;
+}
+
+.intro {
+  font-family: 'Share Tech', sans-serif;
+  font-size: 30pt;
+  color: #241010;
+}
+
+.btn:hover {
+  background-color: #241010;
+  color: white;
+}
+
+.btn {
+  background-color: white;
+  color: #241010;
+  border-color: #241010;
+  margin-top: 10px;
+}
+
+.form-input {
+  max-width: 30%;
+}
+
 /* Set black background color, white text and some padding */
 footer {
-  background-color: #555;
+  background-color: #241010;
   color: white;
   padding: 15px;
 }
@@ -52,6 +63,15 @@ footer {
   .row.content {
     height: auto;
   }
+
+  .form-input {
+    max-width: 50%;
+  }
+
+  .btn {
+    margin-bottom: 10px;
+  }
+
 }
 
 /* #241010 */
