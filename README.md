@@ -7,13 +7,13 @@ Model-View-Controller (MVC)
 A CMS-style blog site build, similar to a Wordpress site, where developers can publish their blog posts and comment on other developers' posts as well.
 
 ## Installation
-
+Use website URL: 
 
 ## Usage
+Use as a blog to post about Tech and anything else!
 
-
-## Walkthrough
-[Video Walkthrough Link](https://drive.google.com/file/d/1LGAe_RcwI2N3NBC8F26A3oq03-EOP2-8/view?usp=sharing)
+## Screenshot
+![Screenshot](./public/images/Screenshot%202023-02-27%20at%2011.01.42%20AM.png)
 
 ## Tests
 
