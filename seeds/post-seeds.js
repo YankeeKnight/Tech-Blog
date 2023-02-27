@@ -1,5 +1,6 @@
 const { Post } = require('../models');
 
+// seeds post portion of database
 const postData = [
     {
         title: 'Story Grooming',

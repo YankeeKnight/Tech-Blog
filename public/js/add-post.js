@@ -1,3 +1,4 @@
+// function to add post to page
 async function newFormHandler(event) {
     event.preventDefault();
 

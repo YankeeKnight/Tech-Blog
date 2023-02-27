@@ -3,6 +3,7 @@ const sequelize = require('../config/connection');
 
 class Post extends Model { }
 
+// sets up post model for use with database
 Post.init(
     {
         id: {
@@ -31,7 +32,7 @@ Post.init(
         sequelize,
         freezeTableName: true,
         underscored: true,
-        modelName: 'post'
+        modelName: 'post',
     }
 );
 

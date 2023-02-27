@@ -1,3 +1,4 @@
+// function deletes a post
 async function deleteFormHandler(event) {
     event.preventDefualt();
 

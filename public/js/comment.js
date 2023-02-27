@@ -1,3 +1,4 @@
+// function to add a comment to page
 async function commentFormHandler(event) {
     event.preventDefault();
 
@@ -28,4 +29,4 @@ async function commentFormHandler(event) {
     }
 }
 
-document.querySelector('.comment-form').addEventListenter('submit', commentFormHandler);
+document.querySelector('#comment-form').addEventListener('submit', commentFormHandler);

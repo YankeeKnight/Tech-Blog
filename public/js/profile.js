@@ -1,3 +1,4 @@
+// fucntion to set up profile
 const newFormHandler = async (event) => {
   event.preventDefault();
 

@@ -1,11 +1,13 @@
 async function signupFormHandler(event) {
     event.preventDefault();
 
+    // Collects values from the login form
     const username = document.querySelector('#username-signup').value.trim();
     const email = document.querySelector('#email-signup').value.trim();
     const password = document.querySelector('#password-signup').value.trim();
 
     if (username && email && password) {
+        // Send a POST request to the API endpoint
         const response = await fetch('/api/users', {
             method: 'POST',
             body: JSON.stringify({
@@ -17,6 +19,7 @@ async function signupFormHandler(event) {
         });
 
         if (response.ok) {
+            // If successful, redirect the browser to the dashboard page
             console.log('success');
 
             document.location.replace('/dashboard');

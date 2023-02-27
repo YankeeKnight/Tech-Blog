@@ -1,6 +1,7 @@
 const router = require('express').Router();
 const { User, Post, Comment } = require('../../models');
 
+// gets all users
 router.get('/', (req, res) => {
   User.findAll({
     attributes: { exclude: ['password'] }
@@ -12,6 +13,7 @@ router.get('/', (req, res) => {
     });
 });
 
+// gets user by id
 router.get('/:id', (req, res) => {
   User.findOne({
     attributes: { exclude: ['password'] },
@@ -48,6 +50,7 @@ router.get('/:id', (req, res) => {
     });
 });
 
+// creates a new user
 router.post('/', (req, res) => {
   User.create({
     username: req.body.username,
@@ -69,6 +72,7 @@ router.post('/', (req, res) => {
     });
 });
 
+// finds one user by username and checks password to log in
 router.post('/login', (req, res) => {
   User.findOne({
     where: {
@@ -80,9 +84,9 @@ router.post('/login', (req, res) => {
         res.status(400).json({ message: 'No user found' });
         return;
       }
-      const valPass = userData.checkPassword(req.body.password);
+      const validPassword = userData.checkPassword(req.body.password);
 
-      if (!valPass) {
+      if (!validPassword) {
         res.status(400).json({ message: 'Invalid Password' });
         return;
       }
@@ -100,6 +104,7 @@ router.post('/login', (req, res) => {
     });
 });
 
+// logs a user out
 router.post('/logout', (req, res) => {
   if (req.session.loggedIn) {
     req.session.destroy(() => {
@@ -110,6 +115,7 @@ router.post('/logout', (req, res) => {
   }
 });
 
+// updates user id
 router.put('/:id', (req, res) => {
   User.update(req.body, {
     individualHooks: true,
@@ -130,6 +136,7 @@ router.put('/:id', (req, res) => {
     });
 });
 
+// deletes user by id
 router.delete('/:id', (req, res) => {
   User.destroy({
     where: {

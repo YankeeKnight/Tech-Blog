@@ -1,11 +1,11 @@
 const { Comment } = require('../models');
 
+// seeds comment portion of database
 const commentData = [
     {
         comment_text: "Send it in cuz I'm ready to conquer",
         user_id: 1,
         post_id: 1
-
     },
     {
         comment_text: "Se puede hablar en espanol aqui?",

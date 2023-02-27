@@ -3,6 +3,7 @@ const router = require('express').Router();
 const { User, Comment, Post } = require('../models');
 const withAuth = require('../utils/auth');
 
+// gets all info for dashboard view
 router.get('/', withAuth, (req, res) => {
     Post.findAll({
         where: {
@@ -32,6 +33,7 @@ router.get('/', withAuth, (req, res) => {
         });
 });
 
+// finds one entry with id
 router.get('/edit/:id', withAuth, (req, res) => {
     Post.findOne({
         where: {
